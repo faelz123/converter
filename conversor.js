@@ -69,12 +69,6 @@ function decimalToBinary(value){ //recebe o valor
         difference = value%2; // retorna o resto da divisão do valor por 2
         value = Math.floor(value/2); // divide o valor por 2, arredondando para baixo
         result.unshift(difference); // adiciona o resto da divisão sempre na primeira posição do vetor
-        console.log(value, difference, result);
     }
-    return result.join(''); // concatena os valores do vetor result
+    return result.join(''); // retorna os valores do vetor result concatenados
 }
-
-// function reverseString(string){
-//     let reversed = string.split('').reverse().join('');
-//     return Number(reversed);
-// }
