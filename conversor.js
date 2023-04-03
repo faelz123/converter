@@ -6,7 +6,9 @@ const decimalInput = document.querySelector('.decimalContainer input');
 const binaryContainer = document.querySelector('.binaryContainer');
 const decimalContainer = document.querySelector('.decimalContainer');
 const converterButton = document.querySelector('.converterButton');
-
+const mainContainer = document.querySelector('.container')
+// const step1 = document.querySelector('.step1');
+// const step2 = document.querySelector('.step2');
 
 
 swapButton.addEventListener('click', function () {
@@ -80,12 +82,17 @@ function decimalToBinary(value){ //recebe o valor
 //Cálculo Binário para Decimal
 function binaryToDecimal(value){ // recebe o valor
     let binaryArray = value.split('').reverse(); // transforma o valor em um vetor e inverte a ordem
-    let x; //armazena o resultado da exponenciação
     let result = 0; //armazena o resultado da somatatória
+    const x = []; //armazena o resultado da exponenciação
+    const resultsArray = [];
+    const explanation = document.querySelector('.explanationContainer');
+    const explanationDiv = createExplanationContainer(explanation);
     for(let i=0; i < binaryArray.length ; i++) { // loop em um contador 'i' que incrementa enquanto for menor que a quantidade de casas do vetor 
-        x = 2**i; // eleva o número 2 a posição do vetor 
-        result += x*binaryArray[i]; // multiplica o resultado armazenado em x pelo valor armazenado na posição i do vetor e soma com o resultado anterior
+        x[i] = 2**i; // eleva o número 2 a posição do vetor 
+        result += x[i]*binaryArray[i]; // multiplica o resultado armazenado em x pelo valor armazenado na posição i do vetor e soma com o resultado anterior
+        resultsArray[i] = result;
     }
+    binaryExplanation(explanationDiv, binaryArray, x, resultsArray);
     return result; //retorna o resultado final
 }
 
@@ -98,3 +105,121 @@ function binaryToDecimal(value){ // recebe o valor
 //     }
 //     return console.log(result);
 // }
+
+function binaryExplanation(explanation, binaryArray, exponentResults, results) {
+    const step1 = binaryStepOne(binaryArray, exponentResults);
+    const step2 = binaryStepTwo(binaryArray, exponentResults);
+    const step3 = binaryStepThree(results);
+    explanation.appendChild(step1);
+    explanation.appendChild(step2);
+    explanation.appendChild(step3);
+}
+
+function binaryStepOne(binaryArray, exponentResults) {
+    const stepOneContainer = document.createElement('div');
+    stepOneContainer.className = 'step1';
+    const stepOneTitle = document.createElement('h2');
+    stepOneTitle.className = 'stepOneTitle';
+    stepOneTitle.textContent = 'Passo 1:'
+    stepOneContainer.appendChild(stepOneTitle);
+    const stepOneContent = document.createElement('p');
+    stepOneTitle.appendChild(stepOneContent);
+    binaryArray.forEach((binaryElement, i) => {
+        const span = document.createElement('span');
+        const brArrow = document.createElement('br');
+        const arrowDown = '\u2193';
+        const brResult = document.createElement('br');
+        const exponentElement = document.createElement('sup');
+        exponentElement.textContent = i;
+        span.append(
+            `${binaryElement}`,
+            exponentElement,
+            brArrow,
+            arrowDown,
+            brResult,
+            `${exponentResults[i]}`
+        );
+        stepOneContent.appendChild(span);
+    });
+    return stepOneContainer;
+}
+
+function binaryStepTwo(binaryArray, exponentResults) {
+    const stepTwoContainer = document.createElement('div');
+    stepTwoContainer.className = 'step2';
+    const stepTwoTitle = document.createElement('h2');
+    stepTwoTitle.className = 'stepTwoTitle';
+    stepTwoTitle.textContent = 'Passo 2:'
+    stepTwoContainer.appendChild(stepTwoTitle);
+    const stepTwoContent = document.createElement('p');
+    stepTwoTitle.appendChild(stepTwoContent);
+    let multiplicationResult = 0;
+    binaryArray.forEach((binaryElement, i) => {
+        multiplicationResult = binaryElement*exponentResults[i];
+        const span = document.createElement('span');
+        const brArrow = document.createElement('br');
+        const arrowDown = '\u2193';
+        const brResult = document.createElement('br');
+        const exponentElement = document.createElement('sup');
+        exponentElement.textContent = i;
+        span.append(
+            `${binaryElement}x`,
+            `${exponentResults[i]}`,
+            brArrow,
+            arrowDown,
+            brResult,
+            `${multiplicationResult}`
+        );
+        stepTwoContent.appendChild(span);
+    });
+    return stepTwoContainer;
+}
+
+function binaryStepThree(results) {
+    console.log(results);
+    const stepThreeContainer = document.createElement('div');
+    stepThreeContainer.className = 'step3';
+    const stepThreeTitle = document.createElement('h2');
+    stepThreeTitle.className = 'stepThreeTitle';
+    stepThreeTitle.textContent = 'Passo 3:'
+    stepThreeContainer.appendChild(stepThreeTitle);
+    const stepThreeContent = document.createElement('p');
+    stepThreeTitle.appendChild(stepThreeContent);
+    let addNumber = 0;
+    results.forEach((result, i) => {
+        addNumber = results[i+1] - results[i];
+        const span = document.createElement('span');
+        const arrowDown = '\u2193';
+        const partialContent = `${result}+${addNumber}<br>${arrowDown}<br>`;
+        let finalResults = results[i+1];
+        if(results.length-1 === i) {
+            return; 
+        } else if(results.length-2 === i) {
+            span.insertAdjacentHTML('afterbegin',`${partialContent}<strong>${finalResults}</strong>`);
+        } else {
+            span.insertAdjacentHTML('afterbegin',`${partialContent}${finalResults}`);
+        }
+        stepThreeContent.appendChild(span);
+    });
+    return stepThreeContainer;
+}
+
+function cleanExplanation(explanationDiv) {
+    return explanationDiv.remove();
+}
+
+
+function createExplanationContainer(explanationDiv) {
+    (explanationDiv) && cleanExplanation(explanationDiv);
+    const div = document.createElement('div');
+    div.className = 'explanationContainer';
+    mainContainer.appendChild(div);
+    return div;
+}
+
+function createArrowIcon() {
+    const arrowIcon = document.createElement('i');
+    arrowIcon.className = 'fi fi-br-arrow-alt-down';
+    return arrowIcon;
+}
+
