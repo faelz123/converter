@@ -7,6 +7,12 @@ h1 {
     text-align: center;
 }
 
+.container {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+}
+
 .swapButton {
     display: block;
     margin: 10px auto;
@@ -47,6 +53,37 @@ h1 {
 
 .binaryContainer {
     order: 2;
+}
+
+.explanationContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: fit-content;
+    max-width: 100%;
+    border: 2px solid black;
+    margin: 0 auto;
+}
+
+.step1, .step2, .step3 {
+    padding: 0 30px;
+}
+
+.step1 p, .step2 p, .step3 p {
+    display: flex;
+    justify-content: center;
+}
+
+.step1 span, .step2 span, .step3 span{
+    min-width: 70px;
+    line-height: 200%;
+    text-align: center;
+    margin-right: 20px;
+}
+
+.step3 span strong {
+    color: red;
+    font-size: 40px;
 }
 
 input[type="number"] {
