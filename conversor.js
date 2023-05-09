@@ -1,6 +1,6 @@
 "use strict";
 
-const swapButton = document.querySelector(".swapButton");
+// const swapButton = document.querySelector(".swapButton");
 const binaryInput = document.querySelector(".binaryContainer input");
 const decimalInput = document.querySelector(".decimalContainer input");
 const binaryContainer = document.querySelector(".binaryContainer");
@@ -9,37 +9,48 @@ const converterButton = document.querySelector(".converterButton");
 const mainContainer = document.querySelector(".container");
 const bitsSelect = document.getElementById("bits");
 const customInput = document.getElementById("other");
+const resultOutput = document.querySelector(".result");
 let selectedValue;
+
+function printResult(result) {
+  let finalResult =
+    (resultOutput.innerHTML = `Resultado: <span>${result}</span>`);
+  return finalResult;
+  // return resultOutput.insertAdjacentHTML(
+  //   "afterbegin",
+  //   `Resultado: <span>${result}</span>`
+  // );
+}
 
 // const step1 = document.querySelector('.step1');
 // const step2 = document.querySelector('.step2');
 
-swapButton.addEventListener("click", function () {
-  let numericType = swapButton.getAttribute("active");
-  swapButtonAttribute(numericType);
-  swapInputPositions(numericType);
-  disableInactiveInput(numericType);
-  eraseInactiveInput(numericType);
-});
+// swapButton.addEventListener("click", function () {
+//   let numericType = swapButton.getAttribute("active");
+//   swapButtonAttribute(numericType);
+//   // swapInputPositions(numericType);
+//   // disableInactiveInput(numericType);
+//   // eraseInactiveInput(numericType);
+// });
 
-function swapButtonAttribute(type) {
-  return type === "decimal"
-    ? swapButton.setAttribute("active", "binary")
-    : swapButton.setAttribute("active", "decimal");
-}
+// function swapButtonAttribute(type) {
+//   return type === "decimal"
+//     ? swapButton.setAttribute("active", "binary")
+//     : swapButton.setAttribute("active", "decimal");
+// }
 
-function swapInputPositions(type) {
-  const bitsContainer = document.querySelector(".bitsContainer");
-  if (type === "decimal") {
-    decimalContainer.style.order = 2;
-    binaryContainer.style.order = 0;
-    return bitsContainer.classList.add("hidden");
-  } else {
-    decimalContainer.style.order = 0;
-    binaryContainer.style.order = 2;
-    return bitsContainer.classList.remove("hidden");
-  }
-}
+// function swapInputPositions(type) {
+//   const bitsContainer = document.querySelector(".bitsContainer");
+//   if (type === "decimal") {
+//     decimalContainer.style.order = 2;
+//     binaryContainer.style.order = 0;
+//     return bitsContainer.classList.add("hidden");
+//   } else {
+//     decimalContainer.style.order = 0;
+//     binaryContainer.style.order = 2;
+//     return bitsContainer.classList.remove("hidden");
+//   }
+// }
 
 function showCustomInput() {
   selectedValue = bitsSelect.value;
@@ -48,35 +59,40 @@ function showCustomInput() {
     : customInput.classList.add("hidden");
 }
 
-function disableInactiveInput(type) {
-  if (type === "decimal") {
-    decimalInput.setAttribute("readonly", "");
-    binaryInput.removeAttribute("readonly");
-  } else {
-    binaryInput.setAttribute("readonly", "");
-    decimalInput.removeAttribute("readonly");
-  }
-}
+// function disableInactiveInput(type) {
+//   if (type === "decimal") {
+//     decimalInput.setAttribute("readonly", "");
+//     binaryInput.removeAttribute("readonly");
+//   } else {
+//     binaryInput.setAttribute("readonly", "");
+//     decimalInput.removeAttribute("readonly");
+//   }
+// }
 
-function eraseInactiveInput(type) {
-  if (type === "decimal") {
-    decimalInput.value = "";
-  } else {
-    binaryInput.value = "";
-  }
-}
+// function eraseInactiveInput(type) {
+//   if (type === "decimal") {
+//     decimalInput.value = "";
+//   } else {
+//     binaryInput.value = "";
+//   }
+// }
 
-converterButton.addEventListener("click", function () {
-  let numericType = swapButton.getAttribute("active");
+converterButton.addEventListener("click", function (event) {
+  // let numericType = swapButton.getAttribute("active");
+  let isDecimal = decimalContainer.classList.contains("hidden");
+  let isBinary = binaryContainer.classList.contains("hidden");
+  const decimalTo = decimalContainer.getAttribute("numeric-type");
   let numericTypeValue;
-  if (numericType === "decimal") {
-    numericTypeValue = Number(decimalInput.value);
-    const result = decimalToBinary(numericTypeValue);
-    return (binaryInput.value = result);
-  } else {
+  if (!isDecimal) {
+    if (decimalTo === "binary") {
+      numericTypeValue = Number(decimalInput.value);
+      const result = decimalToBinary(numericTypeValue);
+      return printResult(result);
+    }
+  } else if (!isBinary) {
     numericTypeValue = binaryInput.value;
     const result = binaryToDecimal(numericTypeValue);
-    return (decimalInput.value = result);
+    return printResult(result);
   }
 });
 
@@ -87,8 +103,8 @@ function decimalToBinary(value) {
   const valueDivision = [value];
   //recebe tamanho de bits
   const customValue = customInput.value;
-  console.log(selectedValue);
   const bitsSize = selectedValue === "other" ? customValue : selectedValue;
+  console.log(bitsSize);
   let result = []; // cria um vetor para armazenar o resto da divisão
   let difference; // armazena o resto da divisão
   const explanation = document.querySelector(".explanationContainer");
