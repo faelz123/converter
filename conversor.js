@@ -148,15 +148,35 @@ function binaryExplanation(explanation, binaryArray, exponentResults, results) {
   explanation.appendChild(step3);
 }
 
-function binaryStepOne(binaryArray, exponentResults) {
-  const stepOneContainer = document.createElement("div");
-  stepOneContainer.className = "step1";
+function createStepsContent(stepTitleClass, stepTitleContent, stepContainer) {
   const stepOneTitle = document.createElement("h2");
-  stepOneTitle.className = "stepOneTitle";
-  stepOneTitle.textContent = "Passo 1:";
-  stepOneContainer.appendChild(stepOneTitle);
+  stepOneTitle.className = stepTitleClass;
+  stepOneTitle.textContent = stepTitleContent;
+  stepContainer.appendChild(stepOneTitle);
   const stepOneContent = document.createElement("p");
-  stepOneContainer.appendChild(stepOneContent);
+  stepContainer.appendChild(stepOneContent);
+  return stepOneContent;
+}
+
+function createStepsContainer(step) {
+  const stepContainer = document.createElement("div");
+  stepContainer.className = step;
+  return stepContainer;
+}
+
+function binaryStepOne(binaryArray, exponentResults) {
+  const stepOneContainer = createStepsContainer("step1");
+  // stepOneContainer.className = "step1";
+  // const stepOneTitle = document.createElement("h2");
+  // stepOneTitle.className = "stepOneTitle";
+  // stepOneTitle.textContent = "Passo 1:";
+  // stepOneContainer.appendChild(stepOneTitle);
+  const stepOneContent = createStepsContent(
+    "stepOneTitle",
+    "Passo 1:",
+    stepOneContainer
+  );
+  // stepOneContainer.appendChild(stepOneContent);
   binaryArray.forEach((binaryElement, i) => {
     const span = document.createElement("span");
     const brArrow = document.createElement("br");
@@ -221,10 +241,13 @@ function binaryStepThree(results) {
   let addNumber = 0;
   results.forEach((result, i) => {
     addNumber = results[i + 1] - results[i];
+    console.log(addNumber);
     const span = document.createElement("span");
     const arrowDown = "\u2193";
     const partialContent = `${result}+${addNumber}<br>${arrowDown}<br>`;
     let finalResults = results[i + 1];
+    console.log(finalResults);
+    console.log(i, results.length - 1);
     if (results.length - 1 === i) {
       return;
     } else if (results.length - 2 === i) {
