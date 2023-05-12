@@ -68,7 +68,7 @@ function charHEXtoDECIMAL(hexArray, hexValues) {
 }
 
 function calcHEXtoDecimal(decimalArray, hexArray) {
-  console.log(decimalArray);
+  // console.log(decimalArray);
   const resultArray = [];
   const sumResultArray = [];
   let result = 0;
@@ -90,8 +90,25 @@ function calcHEXtoDecimal(decimalArray, hexArray) {
   return result;
 }
 
-function hexTable() {
+function createHexTable() {
   //criar table com valores hex e decimal
+  const hexTable = document.createElement("table");
+  hexTable.className = "hexTable";
+  const hexTableBody = document.createElement("tbody");
+  const hexTableHead = document.createElement("thead");
+  const hexTableRow = document.createElement("tr");
+  for (const [key, value] of Object.entries(hexValues)) {
+    const th = document.createElement("th");
+    const td = document.createElement("td");
+    th.textContent = key;
+    td.textContent = value;
+    hexTableHead.appendChild(th);
+    hexTableRow.appendChild(td);
+  }
+  hexTable.appendChild(hexTableHead);
+  hexTableBody.appendChild(hexTableRow);
+  hexTable.appendChild(hexTableBody);
+  return hexTable;
 }
 
 function hexToDecimalExplanation(
@@ -101,26 +118,34 @@ function hexToDecimalExplanation(
   resultArray,
   sumResultArray
 ) {
+  const hexTable = createHexTable();
   const step1 = hexToDecimalStepOne(hexArray, decimalArray); // step1 analizar valores e substituir os caracteres por seus respectivos números
   const step2 = hexToDecimalStepTwo(decimalArray, resultArray); // step2 multiplica o resultado pela posição * 16
   const step3 = hexToDecimalStepThree(sumResultArray); // step3 soma-se os resultados para obter o decimal
+  explanation.appendChild(hexTable);
   explanation.appendChild(step1);
   explanation.appendChild(step2);
   explanation.appendChild(step3);
 }
 
 function hexToDecimalStepOne(hexArray, decimalArray) {
-  const stepOneContainer = document.createElement("div");
-  stepOneContainer.className = "step1";
-  const stepOneTitle = document.createElement("h2");
-  stepOneTitle.className = "stepOneTitle";
-  stepOneTitle.textContent = "Passo 1:";
-  stepOneContainer.appendChild(stepOneTitle);
-  const stepOneContent = document.createElement("p");
-  stepOneContainer.appendChild(stepOneContent);
+  const stepOneContainer = createStepsContainer("step1");
+  const stepOneContent = createStepsContent(
+    "stepOneTitle",
+    "Passo 1:",
+    stepOneContainer
+  );
+  // const stepOneContainer = document.createElement("div");
+  // stepOneContainer.className = "step1";
+  // const stepOneTitle = document.createElement("h2");
+  // stepOneTitle.className = "stepOneTitle";
+  // stepOneTitle.textContent = "Passo 1:";
+  // stepOneContainer.appendChild(stepOneTitle);
+  // const stepOneContent = document.createElement("p");
+  // stepOneContainer.appendChild(stepOneContent);
   hexArray.forEach((value, i) => {
     const span = document.createElement("span");
-    const arrowDown = "\u2193";
+    // const arrowDown = "\u2193";
     span.insertAdjacentHTML(
       "afterbegin",
       `${value} <br> ${arrowDown} <br> ${decimalArray[i]}`
@@ -131,20 +156,26 @@ function hexToDecimalStepOne(hexArray, decimalArray) {
 }
 
 function hexToDecimalStepTwo(decimalArray, resultArray) {
-  const stepTwoContainer = document.createElement("div");
-  stepTwoContainer.className = "step2";
-  const stepTwoTitle = document.createElement("h2");
-  stepTwoTitle.className = "stepTwoTitle";
-  stepTwoTitle.textContent = "Passo 2:";
-  stepTwoContainer.appendChild(stepTwoTitle);
-  const stepTwoContent = document.createElement("p");
-  stepTwoContainer.appendChild(stepTwoContent);
+  const stepTwoContainer = createStepsContainer("step2");
+  const stepTwoContent = createStepsContent(
+    "stepTwoTitle",
+    "Passo 2:",
+    stepTwoContainer
+  );
+  // const stepTwoContainer = document.createElement("div");
+  // stepTwoContainer.className = "step2";
+  // const stepTwoTitle = document.createElement("h2");
+  // stepTwoTitle.className = "stepTwoTitle";
+  // stepTwoTitle.textContent = "Passo 2:";
+  // stepTwoContainer.appendChild(stepTwoTitle);
+  // const stepTwoContent = document.createElement("p");
+  // stepTwoContainer.appendChild(stepTwoContent);
   // decimalArray = decimalArray.reverse();
   // resultArray = resultArray.reverse();
   decimalArray.forEach((value, i) => {
-    console.log(i, value.length);
+    // console.log(i, value.length);
     const span = document.createElement("span");
-    const arrowDown = "\u2193";
+    // const arrowDown = "\u2193";
     const count = resultArray.length - i - 1;
     span.insertAdjacentHTML(
       "afterbegin",
@@ -156,18 +187,24 @@ function hexToDecimalStepTwo(decimalArray, resultArray) {
 }
 
 function hexToDecimalStepThree(sumResultArray) {
-  const stepThreeContainer = document.createElement("div");
-  stepThreeContainer.className = "step3";
-  const stepThreeTitle = document.createElement("h2");
-  stepThreeTitle.className = "stepThreeTitle";
-  stepThreeTitle.textContent = "Passo 3:";
-  stepThreeContainer.appendChild(stepThreeTitle);
-  const stepThreeContent = document.createElement("p");
-  stepThreeContainer.appendChild(stepThreeContent);
+  const stepThreeContainer = createStepsContainer("step3");
+  const stepThreeContent = createStepsContent(
+    "stepThreeTitle",
+    "Passo 3:",
+    stepThreeContainer
+  );
+  // const stepThreeContainer = document.createElement("div");
+  // stepThreeContainer.className = "step3";
+  // const stepThreeTitle = document.createElement("h2");
+  // stepThreeTitle.className = "stepThreeTitle";
+  // stepThreeTitle.textContent = "Passo 3:";
+  // stepThreeContainer.appendChild(stepThreeTitle);
+  // const stepThreeContent = document.createElement("p");
+  // stepThreeContainer.appendChild(stepThreeContent);
   sumResultArray.reverse();
   sumResultArray.forEach((value, i) => {
     const span = document.createElement("span");
-    const arrowDown = "\u2193";
+    // const arrowDown = "\u2193";
     let subNumber = sumResultArray[i + 1] - sumResultArray[i];
     let finalResult = sumResultArray[i + 1];
     let partialContent = `${value} + ${subNumber} <br> ${arrowDown} <br>`;

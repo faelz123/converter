@@ -413,3 +413,25 @@ input[type="number"]::-webkit-inner-spin-button {
 div[numeric-type="binary"] .decimalInputContainer {
   position: absolute;
 }
+
+.hexTable {
+  border-collapse: collapse;
+  width: 30%;
+  margin: 0 0 0 auto;
+}
+
+.hexTable th {
+  height: 30px;
+}
+.hexTable td,
+.hexTable th {
+  height: 30px;
+  text-align: center;
+  border: 2px solid black;
+  border-top: none;
+}
+
+.hexTable td:last-child,
+.hexTable th:last-child {
+  border-right: none;
+}

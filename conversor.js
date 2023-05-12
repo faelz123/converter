@@ -10,6 +10,7 @@ const mainContainer = document.querySelector(".container");
 const bitsSelect = document.getElementById("bits");
 const customInput = document.getElementById("other");
 const resultOutput = document.querySelector(".result");
+const arrowDown = "\u2193";
 let selectedValue;
 
 function printResult(result) {
@@ -166,99 +167,107 @@ function createStepsContainer(step) {
 
 function binaryStepOne(binaryArray, exponentResults) {
   const stepOneContainer = createStepsContainer("step1");
-  // stepOneContainer.className = "step1";
-  // const stepOneTitle = document.createElement("h2");
-  // stepOneTitle.className = "stepOneTitle";
-  // stepOneTitle.textContent = "Passo 1:";
-  // stepOneContainer.appendChild(stepOneTitle);
   const stepOneContent = createStepsContent(
     "stepOneTitle",
     "Passo 1:",
     stepOneContainer
   );
-  // stepOneContainer.appendChild(stepOneContent);
   binaryArray.forEach((binaryElement, i) => {
     const span = document.createElement("span");
-    const brArrow = document.createElement("br");
-    const arrowDown = "\u2193";
-    const brResult = document.createElement("br");
-    const exponentElement = document.createElement("sup");
-    exponentElement.textContent = i;
-    span.append(
-      `2`,
-      exponentElement,
-      brArrow,
-      arrowDown,
-      brResult,
-      `${exponentResults[i]}`
+    // const brArrow = document.createElement("br");
+    // const brResult = document.createElement("br");
+    // const exponentElement = document.createElement("sup");
+    // exponentElement.textContent = i;
+    span.insertAdjacentHTML(
+      "afterbegin",
+      `2<sup>${i}</sup> <br> ${arrowDown} <br> ${exponentResults[i]}`
     );
+    // span.append(
+    //   `2`,
+    //   exponentElement,
+    //   brArrow,
+    //   arrowDown,
+    //   brResult,
+    //   `${exponentResults[i]}`
+    // );
     stepOneContent.appendChild(span);
   });
   return stepOneContainer;
 }
 
 function binaryStepTwo(binaryArray, exponentResults) {
-  const stepTwoContainer = document.createElement("div");
-  stepTwoContainer.className = "step2";
-  const stepTwoTitle = document.createElement("h2");
-  stepTwoTitle.className = "stepTwoTitle";
-  stepTwoTitle.textContent = "Passo 2:";
-  stepTwoContainer.appendChild(stepTwoTitle);
-  const stepTwoContent = document.createElement("p");
-  stepTwoContainer.appendChild(stepTwoContent);
+  const stepTwoContainer = createStepsContainer("step2");
+  const stepTwoContent = createStepsContent(
+    "stepTwoTitle",
+    "Passo 2:",
+    stepTwoContainer
+  );
+  // const stepTwoContainer = document.createElement("div");
+  // stepTwoContainer.className = "step2";
+  // const stepTwoTitle = document.createElement("h2");
+  // stepTwoTitle.className = "stepTwoTitle";
+  // stepTwoTitle.textContent = "Passo 2:";
+  // stepTwoContainer.appendChild(stepTwoTitle);
+  // const stepTwoContent = document.createElement("p");
+  // stepTwoContainer.appendChild(stepTwoContent);
   let multiplicationResult = 0;
   binaryArray.forEach((binaryElement, i) => {
     multiplicationResult = binaryElement * exponentResults[i];
     const span = document.createElement("span");
-    const brArrow = document.createElement("br");
-    const arrowDown = "\u2193";
-    const brResult = document.createElement("br");
-    const exponentElement = document.createElement("sup");
-    exponentElement.textContent = i;
-    span.append(
-      `${binaryElement}x`,
-      `${exponentResults[i]}`,
-      brArrow,
-      arrowDown,
-      brResult,
-      `${multiplicationResult}`
+    // const brArrow = document.createElement("br");
+    // const brResult = document.createElement("br");
+    // const exponentElement = document.createElement("sup");
+    // exponentElement.textContent = i;
+    span.insertAdjacentHTML(
+      "afterbegin",
+      `${binaryElement}x${exponentResults[i]} <br> ${arrowDown} <br> ${multiplicationResult}`
     );
+    // span.append(
+    //   `${binaryElement}x`,
+    //   `${exponentResults[i]}`,
+    //   brArrow,
+    //   arrowDown,
+    //   brResult,
+    //   `${multiplicationResult}`
+    // );
     stepTwoContent.appendChild(span);
   });
   return stepTwoContainer;
 }
 
 function binaryStepThree(results) {
-  console.log(results);
-  const stepThreeContainer = document.createElement("div");
-  stepThreeContainer.className = "step3";
-  const stepThreeTitle = document.createElement("h2");
-  stepThreeTitle.className = "stepThreeTitle";
-  stepThreeTitle.textContent = "Passo 3:";
-  stepThreeContainer.appendChild(stepThreeTitle);
-  const stepThreeContent = document.createElement("p");
-  stepThreeContainer.appendChild(stepThreeContent);
+  const stepThreeContainer = createStepsContainer("step3");
+  const stepThreeContent = createStepsContent(
+    "stepThreeTitle",
+    "Passo 3:",
+    stepThreeContainer
+  );
+  // const stepThreeContainer = document.createElement("div");
+  // stepThreeContainer.className = "step3";
+  // const stepThreeTitle = document.createElement("h2");
+  // stepThreeTitle.className = "stepThreeTitle";
+  // stepThreeTitle.textContent = "Passo 3:";
+  // stepThreeContainer.appendChild(stepThreeTitle);
+  // const stepThreeContent = document.createElement("p");
+  // stepThreeContainer.appendChild(stepThreeContent);
   let addNumber = 0;
   results.forEach((result, i) => {
     addNumber = results[i + 1] - results[i];
-    console.log(addNumber);
     const span = document.createElement("span");
-    const arrowDown = "\u2193";
     const partialContent = `${result}+${addNumber}<br>${arrowDown}<br>`;
+    const final = results[results.length - 1];
     let finalResults = results[i + 1];
-    console.log(finalResults);
-    console.log(i, results.length - 1);
     if (results.length - 1 === i) {
       return;
-    } else if (results.length - 2 === i) {
+    } else if (finalResults === final && addNumber !== 0) {
       span.insertAdjacentHTML(
         "afterbegin",
         `${partialContent}<strong>${finalResults}</strong>`
       );
-    } else {
+    } else if (addNumber !== 0) {
       span.insertAdjacentHTML("afterbegin", `${partialContent}${finalResults}`);
     }
-    stepThreeContent.appendChild(span);
+    span.textContent !== "" && stepThreeContent.appendChild(span);
   });
   return stepThreeContainer;
 }
@@ -285,20 +294,25 @@ function decimalExplanation(explanation, result, valueDivision, initialValue) {
 }
 
 function decimalStepOne(valuesDivision, results) {
-  const stepOneContainer = document.createElement("div");
-  stepOneContainer.className = "step1";
-  const stepOneTitle = document.createElement("h2");
-  stepOneTitle.className = "stepOneTitle";
-  stepOneTitle.textContent = "Passo 1:";
-  stepOneContainer.appendChild(stepOneTitle);
-  const stepOneContent = document.createElement("p");
-  stepOneContainer.appendChild(stepOneContent);
+  const stepOneContainer = createStepsContainer("step1");
+  const stepOneContent = createStepsContent(
+    "stepOneTitle",
+    "Passo 1:",
+    stepOneContainer
+  );
+  // const stepOneContainer = document.createElement("div");
+  // stepOneContainer.className = "step1";
+  // const stepOneTitle = document.createElement("h2");
+  // stepOneTitle.className = "stepOneTitle";
+  // stepOneTitle.textContent = "Passo 1:";
+  // stepOneContainer.appendChild(stepOneTitle);
+  // const stepOneContent = document.createElement("p");
+  // stepOneContainer.appendChild(stepOneContent);
   let difference;
   valuesDivision.forEach((value, i) => {
     difference = results[results.length - 1 - i];
-    console.log(results.length - i, "dif");
+    // console.log(results.length - i, "dif");
     const span = document.createElement("span");
-    const arrowDown = "\u2193";
     const divisionSign = "\u00f7";
     if (i !== valuesDivision.length - 1) {
       span.insertAdjacentHTML(
@@ -316,20 +330,24 @@ function decimalStepOne(valuesDivision, results) {
 }
 
 function decimalStepTwo(valuesDivision, results) {
-  const stepTwoContainer = document.createElement("div");
-  stepTwoContainer.className = "step2";
-  const stepTwoTitle = document.createElement("h2");
-  stepTwoTitle.className = "stepTwoTitle";
-  stepTwoTitle.textContent = "Passo 2:";
-  stepTwoContainer.appendChild(stepTwoTitle);
-  const stepTwoContent = document.createElement("p");
-  stepTwoContainer.appendChild(stepTwoContent);
+  const stepTwoContainer = createStepsContainer("step2");
+  const stepTwoContent = createStepsContent(
+    "stepTwoTitle",
+    "Passo 2:",
+    stepTwoContainer
+  );
+  // const stepTwoContainer = document.createElement("div");
+  // stepTwoContainer.className = "step2";
+  // const stepTwoTitle = document.createElement("h2");
+  // stepTwoTitle.className = "stepTwoTitle";
+  // stepTwoTitle.textContent = "Passo 2:";
+  // stepTwoContainer.appendChild(stepTwoTitle);
+  // const stepTwoContent = document.createElement("p");
+  // stepTwoContainer.appendChild(stepTwoContent);
   let difference;
   valuesDivision.forEach((value, i) => {
     difference = results[results.length - 1 - i];
-    console.log(results.length - i, "dif");
     const span = document.createElement("span");
-    const arrowDown = "\u2193";
     if (i !== valuesDivision.length - 1) {
       span.insertAdjacentHTML(
         "afterbegin",
