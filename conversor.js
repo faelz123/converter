@@ -11,6 +11,8 @@ const bitsSelect = document.getElementById("bits");
 const customInput = document.getElementById("other");
 const resultOutput = document.querySelector(".result");
 const arrowDown = "\u2193";
+const divisionSign = "\u00f7";
+
 let selectedValue;
 
 function printResult(result) {
@@ -149,14 +151,27 @@ function binaryExplanation(explanation, binaryArray, exponentResults, results) {
   explanation.appendChild(step3);
 }
 
-function createStepsContent(stepTitleClass, stepTitleContent, stepContainer) {
-  const stepOneTitle = document.createElement("h2");
-  stepOneTitle.className = stepTitleClass;
-  stepOneTitle.textContent = stepTitleContent;
-  stepContainer.appendChild(stepOneTitle);
-  const stepOneContent = document.createElement("p");
-  stepContainer.appendChild(stepOneContent);
-  return stepOneContent;
+function createStepsContent(
+  stepTitleClass,
+  stepTitleContent,
+  stepExplanation,
+  stepContainer
+) {
+  const stepTitle = document.createElement("h2");
+  stepTitle.className = stepTitleClass;
+  stepTitle.textContent = stepTitleContent;
+  stepContainer.appendChild(stepTitle);
+  stepContainer.appendChild(stepExplanation);
+  const stepContent = document.createElement("p");
+  stepContainer.appendChild(stepContent);
+  return stepContent;
+}
+
+function createStepExplanation(text) {
+  const headingTwo = document.createElement("p");
+  headingTwo.className = "stepExplanation";
+  headingTwo.textContent = text;
+  return headingTwo;
 }
 
 function createStepsContainer(step) {
@@ -167,9 +182,11 @@ function createStepsContainer(step) {
 
 function binaryStepOne(binaryArray, exponentResults) {
   const stepOneContainer = createStepsContainer("step1");
+  const stepOneExplanation = createStepExplanation("A");
   const stepOneContent = createStepsContent(
     "stepOneTitle",
     "Passo 1:",
+    stepOneExplanation,
     stepOneContainer
   );
   binaryArray.forEach((binaryElement, i) => {
@@ -197,9 +214,11 @@ function binaryStepOne(binaryArray, exponentResults) {
 
 function binaryStepTwo(binaryArray, exponentResults) {
   const stepTwoContainer = createStepsContainer("step2");
+  const stepTwoExplanation = createStepExplanation("A");
   const stepTwoContent = createStepsContent(
     "stepTwoTitle",
     "Passo 2:",
+    stepTwoExplanation,
     stepTwoContainer
   );
   // const stepTwoContainer = document.createElement("div");
@@ -237,9 +256,11 @@ function binaryStepTwo(binaryArray, exponentResults) {
 
 function binaryStepThree(results) {
   const stepThreeContainer = createStepsContainer("step3");
+  const stepThreeExplanation = createStepExplanation("A");
   const stepThreeContent = createStepsContent(
     "stepThreeTitle",
     "Passo 3:",
+    stepThreeExplanation,
     stepThreeContainer
   );
   // const stepThreeContainer = document.createElement("div");
@@ -295,9 +316,11 @@ function decimalExplanation(explanation, result, valueDivision, initialValue) {
 
 function decimalStepOne(valuesDivision, results) {
   const stepOneContainer = createStepsContainer("step1");
+  const stepOneExplanation = createStepExplanation("A");
   const stepOneContent = createStepsContent(
     "stepOneTitle",
     "Passo 1:",
+    stepOneExplanation,
     stepOneContainer
   );
   // const stepOneContainer = document.createElement("div");
@@ -313,7 +336,6 @@ function decimalStepOne(valuesDivision, results) {
     difference = results[results.length - 1 - i];
     // console.log(results.length - i, "dif");
     const span = document.createElement("span");
-    const divisionSign = "\u00f7";
     if (i !== valuesDivision.length - 1) {
       span.insertAdjacentHTML(
         "afterbegin",
@@ -331,9 +353,11 @@ function decimalStepOne(valuesDivision, results) {
 
 function decimalStepTwo(valuesDivision, results) {
   const stepTwoContainer = createStepsContainer("step2");
+  const stepTwoExplanation = createStepExplanation("A");
   const stepTwoContent = createStepsContent(
     "stepTwoTitle",
     "Passo 2:",
+    stepTwoExplanation,
     stepTwoContainer
   );
   // const stepTwoContainer = document.createElement("div");
