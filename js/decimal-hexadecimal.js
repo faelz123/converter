@@ -1,6 +1,5 @@
 "use strict";
 
-const toDecimalInput = document.getElementById("hexToDecimal");
 const hexContainer = document.querySelector(".hexadecimalContainer");
 
 const hexValues = {
@@ -15,7 +14,6 @@ const hexValues = {
 function decimalToHexadecimal(decimal) {
   const result = [];
   const decimalsArray = [];
-  const explanation = document.querySelector(".explanationContainer");
   const explanationDiv = createExplanationContainer(explanation);
   // if (decimal >= 16) {
   while (decimal > 0) {
@@ -86,9 +84,9 @@ function decimalToHexStepOne(decimalsArray, result) {
     if (decimalsArray.length - 1 === i) return;
     span.insertAdjacentHTML(
       "afterbegin",
-      `${value}${divisionSign}16 <br> ${arrowDown} <br> ${
+      `${value}${divisionSign}16 <br> ${arrowDown} <br> Q: ${
         decimalsArray[i + 1]
-      } <br> ${arrowDown} <br> ${result[result.length - 1 - i]}`
+      } <br> ${arrowDown} <br> R: ${result[result.length - 1 - i]}`
     );
     stepOneContent.appendChild(span);
   });
@@ -122,17 +120,8 @@ function decimalToHexStepTwo(result, finalResult) {
 function hexToDecimal(hex) {
   const hexArray = Array.from(hex);
   const decimalArray = charHEXtoDECIMAL(hexArray, hexValues);
-  console.log(decimalArray);
   return calcHEXtoDecimal(decimalArray, hexArray);
 }
-
-// function arrayHEX(hex) {
-//   let hexArray = [];
-//   for (let i = 0; i < hex.length; i++) {
-//     hexArray.push(hex[i]);
-//   }
-//   return hexArray;
-// }
 
 function charHEXtoDECIMAL(hexArray, hexValues) {
   let arrayHex = [...hexArray];
@@ -142,17 +131,15 @@ function charHEXtoDECIMAL(hexArray, hexValues) {
         arrayHex[i] = value;
       }
     }
-    // arrayHex.length === i && (arrayHex[i] = hexArray[i]); // Olhar no decimalToHex e refatorar.
   }
   return arrayHex;
 }
 
 function calcHEXtoDecimal(decimalArray, hexArray) {
-  // console.log(decimalArray);
+  console.log(decimalArray);
   const resultArray = [];
   const sumResultArray = [];
   let result = 0;
-  const explanation = document.querySelector(".explanationContainer");
   const explanationDiv = createExplanationContainer(explanation);
   for (let i = 0; i < decimalArray.length; i++) {
     let decimal = decimalArray[decimalArray.length - 1 - i] * 16 ** i;
@@ -308,15 +295,3 @@ function hexToDecimalStepThree(sumResultArray) {
   });
   return stepThreeContainer;
 }
-
-converterButton.addEventListener("click", function (event) {
-  const isDecimaltoHex = decimalContainer.getAttribute("numeric-type");
-  const isHexToDecimal = hexContainer.classList.contains("hidden");
-  if (isDecimaltoHex === "hex" && isHexToDecimal) {
-    const decimal = Number(decimalInput.value);
-    return printResult(decimalToHexadecimal(decimal));
-  } else if (!isHexToDecimal) {
-    const hex = toDecimalInput.value.toUpperCase();
-    return printResult(hexToDecimal(hex));
-  }
-});

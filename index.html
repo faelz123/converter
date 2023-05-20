@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="conversor.css" />
+    <link rel="stylesheet" href="./css/conversor.css" />
     <link
       rel="stylesheet"
       href="https://cdn-uicons.flaticon.com/uicons-bold-straight/css/uicons-bold-straight.css"
@@ -13,14 +13,16 @@
       rel="stylesheet"
       href="https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css"
     />
-    <title>Conversor de decimal, binário e hexadecimal</title>
+    <title>
+      Conversor de sistemas numéricos decimal, binário e hexadecimal
+    </title>
   </head>
   <body>
     <header>
       <div class="nav-wrapper">
         <div class="logo-container">
           <a href="https://www.fumec.br">
-            <img class="logo" src="logo-small.png" alt="Logo" />
+            <img class="logo" src="./img/logo-small.png" alt="Logo" />
           </a>
         </div>
         <nav class="primary-navigation">
@@ -32,6 +34,7 @@
           </label>
           <div class="nav-container">
             <ul class="nav-tabs">
+              <li class="nav-tab">Ínicio</li>
               <li class="nav-tab">
                 Decimal
                 <ul class="dropdown">
@@ -51,13 +54,16 @@
                   <li data-conversion="hexToDecimal">Decimal</li>
                 </ul>
               </li>
-              <li class="nav-tab">Sobre</li>
+              <!-- <li class="nav-tab">Sobre</li> -->
             </ul>
           </div>
         </nav>
       </div>
     </header>
-    <h1>Converter Decimal para Binário</h1>
+    <h1 class="mainTitle">
+      Conversor de sistemas numéricos <br />
+      Decimal, Binário e Hexadecimal
+    </h1>
     <div class="container">
       <div class="inputContainer hidden">
         <div
@@ -104,8 +110,10 @@
         </div>
       </div>
     </div>
-    <script src="menu.js"></script>
-    <script src="conversor.js"></script>
-    <script src="decimal-hexadecimal.js"></script>
+    <script type="module" src="./js/firebase.js"></script>
+    <script src="./js/menu.js"></script>
+    <script src="./js/general.js"></script>
+    <script src="./js/conversor.js"></script>
+    <script src="./js/decimal-hexadecimal.js"></script>
   </body>
 </html>
