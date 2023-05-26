@@ -14,14 +14,14 @@
       href="https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css"
     />
     <title>
-      Conversor de sistemas numéricos decimal, binário e hexadecimal
+      Conversor de sistemas numéricos: Decimal, Binário e Hexadecimal
     </title>
   </head>
   <body>
     <header>
       <div class="nav-wrapper">
         <div class="logo-container">
-          <a href="https://www.fumec.br">
+          <a href="http://www.fumec.br">
             <img class="logo" src="./img/logo-small.png" alt="Logo" />
           </a>
         </div>
@@ -42,26 +42,35 @@
                   <li data-conversion="decimalToHex">Hexadecimal</li>
                 </ul>
               </li>
+              <ul class="dropdownMobile">
+                <li data-conversion="decimalToBinary">Binário</li>
+                <li data-conversion="decimalToHex">Hexadecimal</li>
+              </ul>
               <li class="nav-tab">
                 Binário
                 <ul class="dropdown">
                   <li data-conversion="binaryToDecimal">Decimal</li>
                 </ul>
               </li>
+              <ul class="dropdownMobile">
+                <li data-conversion="binaryToDecimal">Decimal</li>
+              </ul>
               <li class="nav-tab">
                 Hexadecimal
                 <ul class="dropdown">
                   <li data-conversion="hexToDecimal">Decimal</li>
                 </ul>
               </li>
-              <!-- <li class="nav-tab">Sobre</li> -->
+              <ul class="dropdownMobile">
+                <li data-conversion="hexToDecimal">Decimal</li>
+              </ul>
             </ul>
           </div>
         </nav>
       </div>
     </header>
     <h1 class="mainTitle">
-      Conversor de sistemas numéricos <br />
+      Conversor de sistemas numéricos: <br />
       Decimal, Binário e Hexadecimal
     </h1>
     <div class="container">
@@ -70,40 +79,30 @@
           class="decimalContainer hidden numeric"
           data-numeric-conversion="decimalToBinary decimalToHex"
         >
-          <div class="decimalInputContainer">
-            <label for="decimal">Decimal</label>
-            <input id="decimal" type="number" />
-          </div>
-          <div class="bitsContainer">
-            <label for="bits">Número de Bits</label>
-            <select id="bits" onchange="showCustomInput()">
-              <option value="4" selected>4 bits</option>
-              <option value="8">8 bits</option>
-              <option value="16">16 bits</option>
-              <option value="other">Outro</option>
-            </select>
-            <input id="other" class="hidden" type="number" />
-          </div>
+          <input id="decimal" type="text" oninput="validateDecimalInput()" />
+          <label for="decimal">Decimal</label>
         </div>
-        <!-- <button class="swapButton" active="decimal">
-          <i class="fi fi-bs-sort-alt"></i>
-        </button> -->
+
         <div
           class="binaryContainer numeric hidden"
           data-numeric-conversion="binaryToDecimal"
         >
+          <input id="binary" type="text" oninput="validateBinaryInput()" />
           <label for="binary">Binário</label>
-          <input id="binary" type="number" />
         </div>
         <div
           class="hexadecimalContainer centerItem hidden numeric"
           data-numeric-conversion="hexToDecimal"
         >
+          <input
+            id="hexToDecimal"
+            type="text"
+            oninput="validateHexadecimalInput()"
+          />
           <label for="hexToDecimal">Hexadecimal</label>
-          <input id="hexToDecimal" type="text" />
         </div>
         <div class="converterButtonContainer">
-          <button class="converterButton" active>Converter agora</button>
+          <button class="converterButton" active>CONVERTER</button>
         </div>
         <div class="resultContainer">
           <h2 class="result"></h2>
@@ -111,8 +110,8 @@
       </div>
     </div>
     <script type="module" src="./js/firebase.js"></script>
-    <script src="./js/menu.js"></script>
     <script src="./js/general.js"></script>
+    <script src="./js/menu.js"></script>
     <script src="./js/conversor.js"></script>
     <script src="./js/decimal-hexadecimal.js"></script>
   </body>
