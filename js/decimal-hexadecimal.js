@@ -11,30 +11,26 @@ const hexValues = {
   F: 15,
 };
 
-function decimalToHexadecimal(decimal) {
+//Ínicio da conversão de decimal para hexadecimal
+
+//cálculo da conversão
+function decimalToHexadecimal(decimal, explanation) {
   const result = [];
   const decimalsArray = [];
   const explanationDiv = createExplanationContainer(explanation);
-  // if (decimal >= 16) {
   while (decimal > 0) {
     decimalsArray.push(decimal);
     let diff = decimal % 16;
     decimal = parseInt(decimal / 16);
     result.unshift(diff);
   }
-  // result.unshift(decimal);
   decimalsArray.push(decimal);
-  console.log(result, "if");
-  // } else {
-  //   decimalsArray.push(decimal);
-  //   console.log(decimalsArray, "else");
-  //   result.push(decimal);
-  // }
   const finalResult = assignHex(result, hexValues);
   decimalToHexExplanation(explanationDiv, decimalsArray, result, finalResult);
   return finalResult.join("");
 }
 
+//substitui decimais por hexadecimais
 function assignHex(valoresHEX, hexValues) {
   let decimalsArray = [...valoresHEX];
   for (let i = 0; i < decimalsArray.length; i++) {
@@ -47,6 +43,7 @@ function assignHex(valoresHEX, hexValues) {
   return decimalsArray;
 }
 
+//cria explicação
 function decimalToHexExplanation(
   explanation,
   decimalsArray,
@@ -61,6 +58,7 @@ function decimalToHexExplanation(
   explanation.appendChild(step2);
 }
 
+////cria o passo 1 da explicação
 function decimalToHexStepOne(decimalsArray, result) {
   const stepOneContainer = createStepsContainer("step1");
   const stepOneExplanation = createStepExplanation(
@@ -78,26 +76,28 @@ function decimalToHexStepOne(decimalsArray, result) {
     stepOneExplanation,
     stepOneContainer
   );
-  console.log(decimalsArray);
   decimalsArray.forEach((value, i) => {
     const span = document.createElement("span");
     if (decimalsArray.length - 1 === i) return;
     span.insertAdjacentHTML(
       "afterbegin",
-      `${value}${divisionSign}16 <br> ${arrowDown} <br> Q: ${
+      `${value}${divisionSign}16 <br> ${arrowDown} <br>  ${
         decimalsArray[i + 1]
-      } <br> ${arrowDown} <br> R: ${result[result.length - 1 - i]}`
+      } <br> ${arrowDown} <br> ${result[result.length - 1 - i]}`
     );
     stepOneContent.appendChild(span);
   });
   return stepOneContainer;
 }
 
+////cria o passo 2 da explicação
 function decimalToHexStepTwo(result, finalResult) {
   const resultsReverse = [...result].reverse();
   const stepTwoContainer = createStepsContainer("step2");
   const stepTwoExplanation = createStepExplanation(
-    `Com isso pegamos o(s) resto(s) da operação resultando em: ${resultsReverse}. Invertemos a posição dos decimais: ${result} e substituimos os decimais maiores ou iguais a 10 por letras de (A-F) obtendo o valor hexadecimal. (TABELA DE SUBSTITUIÇÃO ACIMA).`
+    `Com isso pegamos o(s) resto(s) da operação resultando em: ${resultsReverse}. Invertemos a posição dos decimais: ${result} e substituimos os decimais maiores ou iguais a 10 por letras de (A-F) obtendo o valor hexadecimal ${finalResult.join(
+      ""
+    )}. (TABELA DE SUBSTITUIÇÃO ACIMA).`
   );
   const stepTwoContent = createStepsContent(
     "stepTwoTitle",
@@ -105,7 +105,6 @@ function decimalToHexStepTwo(result, finalResult) {
     stepTwoExplanation,
     stepTwoContainer
   );
-
   result.forEach((value, i) => {
     const span = document.createElement("span");
     span.insertAdjacentHTML(
@@ -117,12 +116,14 @@ function decimalToHexStepTwo(result, finalResult) {
   return stepTwoContainer;
 }
 
-function hexToDecimal(hex) {
+////// Ínicio da conversão de hexadecimal para decimal /////////
+function hexToDecimal(hex, explanation) {
   const hexArray = Array.from(hex);
   const decimalArray = charHEXtoDECIMAL(hexArray, hexValues);
-  return calcHEXtoDecimal(decimalArray, hexArray);
+  return calcHEXtoDecimal(decimalArray, hexArray, explanation);
 }
 
+//substitui hexadecimais por decimais
 function charHEXtoDECIMAL(hexArray, hexValues) {
   let arrayHex = [...hexArray];
   for (let i = 0; i < arrayHex.length; i++) {
@@ -135,8 +136,8 @@ function charHEXtoDECIMAL(hexArray, hexValues) {
   return arrayHex;
 }
 
-function calcHEXtoDecimal(decimalArray, hexArray) {
-  console.log(decimalArray);
+//cálculo da conversão
+function calcHEXtoDecimal(decimalArray, hexArray, explanation) {
   const resultArray = [];
   const sumResultArray = [];
   let result = 0;
@@ -157,8 +158,10 @@ function calcHEXtoDecimal(decimalArray, hexArray) {
   return result;
 }
 
+//////// Ínicio da explicação da conversão //////////////
+
+////cria tabela com os hexadecimais
 function createHexTable() {
-  //criar table com valores hex e decimal
   const hexTable = document.createElement("table");
   hexTable.className = "hexTable";
   const hexTableBody = document.createElement("tbody");
@@ -178,6 +181,7 @@ function createHexTable() {
   return hexTable;
 }
 
+////cria explicação
 function hexToDecimalExplanation(
   explanation,
   hexArray,
@@ -195,26 +199,20 @@ function hexToDecimalExplanation(
   explanation.appendChild(step3);
 }
 
+////cria o passo 1 da explicação
 function hexToDecimalStepOne(hexArray, decimalArray) {
   const stepOneContainer = createStepsContainer("step1");
-  const stepOneExplanation = createStepExplanation("A");
+  const stepOneExplanation = createStepExplanation(
+    `Começamos por substituir os algorismos hexadecimais (A-F), caso existam no valor hexadecimal, pelos seus respectivos valores decimais.`
+  );
   const stepOneContent = createStepsContent(
     "stepOneTitle",
     "Passo 1:",
     stepOneExplanation,
     stepOneContainer
   );
-  // const stepOneContainer = document.createElement("div");
-  // stepOneContainer.className = "step1";
-  // const stepOneTitle = document.createElement("h2");
-  // stepOneTitle.className = "stepOneTitle";
-  // stepOneTitle.textContent = "Passo 1:";
-  // stepOneContainer.appendChild(stepOneTitle);
-  // const stepOneContent = document.createElement("p");
-  // stepOneContainer.appendChild(stepOneContent);
   hexArray.forEach((value, i) => {
     const span = document.createElement("span");
-    // const arrowDown = "\u2193";
     span.insertAdjacentHTML(
       "afterbegin",
       `${value} <br> ${arrowDown} <br> ${decimalArray[i]}`
@@ -224,29 +222,20 @@ function hexToDecimalStepOne(hexArray, decimalArray) {
   return stepOneContainer;
 }
 
+////cria o passo 2 da explicação
 function hexToDecimalStepTwo(decimalArray, resultArray) {
   const stepTwoContainer = createStepsContainer("step2");
-  const stepTwoExplanation = createStepExplanation("A");
+  const stepTwoExplanation = createStepExplanation(
+    `Então multiplicamos cada decimal obtido (Passo 1) pelo resultado da multiplicação da exponenciação da base hexadecimal (16) em sua respectiva posição.`
+  );
   const stepTwoContent = createStepsContent(
     "stepTwoTitle",
     "Passo 2:",
     stepTwoExplanation,
     stepTwoContainer
   );
-  // const stepTwoContainer = document.createElement("div");
-  // stepTwoContainer.className = "step2";
-  // const stepTwoTitle = document.createElement("h2");
-  // stepTwoTitle.className = "stepTwoTitle";
-  // stepTwoTitle.textContent = "Passo 2:";
-  // stepTwoContainer.appendChild(stepTwoTitle);
-  // const stepTwoContent = document.createElement("p");
-  // stepTwoContainer.appendChild(stepTwoContent);
-  // decimalArray = decimalArray.reverse();
-  // resultArray = resultArray.reverse();
   decimalArray.forEach((value, i) => {
-    // console.log(i, value.length);
     const span = document.createElement("span");
-    // const arrowDown = "\u2193";
     const count = resultArray.length - i - 1;
     span.insertAdjacentHTML(
       "afterbegin",
@@ -257,27 +246,21 @@ function hexToDecimalStepTwo(decimalArray, resultArray) {
   return stepTwoContainer;
 }
 
+////cria o passo 3 da explicação
 function hexToDecimalStepThree(sumResultArray) {
   const stepThreeContainer = createStepsContainer("step3");
-  const stepThreeExplanation = createStepExplanation("A");
+  const stepThreeExplanation = createStepExplanation(
+    `Por fim, somamos os resultado das multiplicações (Passo 2), obtendo o valor decimal ${sumResultArray[0]}.`
+  );
   const stepThreeContent = createStepsContent(
     "stepThreeTitle",
     "Passo 3:",
     stepThreeExplanation,
     stepThreeContainer
   );
-  // const stepThreeContainer = document.createElement("div");
-  // stepThreeContainer.className = "step3";
-  // const stepThreeTitle = document.createElement("h2");
-  // stepThreeTitle.className = "stepThreeTitle";
-  // stepThreeTitle.textContent = "Passo 3:";
-  // stepThreeContainer.appendChild(stepThreeTitle);
-  // const stepThreeContent = document.createElement("p");
-  // stepThreeContainer.appendChild(stepThreeContent);
   sumResultArray.reverse();
   sumResultArray.forEach((value, i) => {
     const span = document.createElement("span");
-    // const arrowDown = "\u2193";
     let subNumber = sumResultArray[i + 1] - sumResultArray[i];
     let finalResult = sumResultArray[i + 1];
     let partialContent = `${value} + ${subNumber} <br> ${arrowDown} <br>`;
