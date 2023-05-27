@@ -12,6 +12,7 @@ navTabHome.forEach(function (item) {
       hideItems(numericItens);
       removeResultAndExplanation();
       closeMenuAndClearAttribute(item);
+      preventScrolling();
     } else {
       navTabHome.forEach(function (otherItem) {
         otherItem === item
@@ -34,6 +35,7 @@ navTabItensMobile.forEach(function (item) {
     changePageTitle(item);
     removeResultAndExplanation();
     closeMenuAndClearAttribute(item);
+    preventScrolling();
   });
 });
 
@@ -49,6 +51,7 @@ navTabItens.forEach(function (item) {
     displayItem(numericItens, conversion);
     changePageTitle(item);
     removeResultAndExplanation();
+    preventScrolling();
   });
 });
 

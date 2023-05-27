@@ -90,7 +90,7 @@ function createStepsContainer(step) {
 function binaryStepOne(binaryArray, exponentResults) {
   const stepOneContainer = createStepsContainer("step1");
   const stepOneExplanation = createStepExplanation(
-    `Neste passo a base binária (2) é elevada à respectiva posição de cada bit (digíto binário).`
+    `Neste passo a base binária (2) é elevada à respectiva posição de cada bit (dígito binário).`
   );
   const stepOneContent = createStepsContent(
     "stepOneTitle",

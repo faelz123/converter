@@ -79,7 +79,11 @@
           class="decimalContainer hidden numeric"
           data-numeric-conversion="decimalToBinary decimalToHex"
         >
-          <input id="decimal" type="text" oninput="validateDecimalInput()" />
+          <input
+            id="decimal"
+            type="text"
+            oninput="validateDecimalInput(event)"
+          />
           <label for="decimal">Decimal</label>
         </div>
 
@@ -87,7 +91,7 @@
           class="binaryContainer numeric hidden"
           data-numeric-conversion="binaryToDecimal"
         >
-          <input id="binary" type="text" oninput="validateBinaryInput()" />
+          <input id="binary" type="text" oninput="validateBinaryInput(event)" />
           <label for="binary">Binário</label>
         </div>
         <div
@@ -97,7 +101,7 @@
           <input
             id="hexToDecimal"
             type="text"
-            oninput="validateHexadecimalInput()"
+            oninput="validateHexadecimalInput(event)"
           />
           <label for="hexToDecimal">Hexadecimal</label>
         </div>
